@@ -7,7 +7,7 @@ import com.example.trackrush.data.repository.F1Repository
 class MeetingListViewModel : ViewModel() {
     private val repository = F1Repository()
 
-    val meeting = liveData {
+    val meetings = liveData {
         val retrievedMeetings = repository.getAllMeetings()
             emit(retrievedMeetings)
     }

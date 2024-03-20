@@ -1,50 +1,40 @@
 package com.example.trackrush.ui.meetings
 
+import android.annotation.SuppressLint
 import androidx.recyclerview.widget.RecyclerView
 import android.view.LayoutInflater
-import android.view.View
 import android.view.ViewGroup
-import android.widget.TextView
-import com.example.trackrush.R
+import com.example.trackrush.data.model.Meeting
+import com.example.trackrush.databinding.FragmentMeetingListItemBinding
 
-import com.example.trackrush.ui.meetings.placeholder.PlaceholderContent.PlaceholderItem
-import com.example.trackrush.databinding.FragmentMeetingListBinding
-
-/**
- * [RecyclerView.Adapter] that can display a [PlaceholderItem].
- * TODO: Replace the implementation with code for your data type.
- */
 class MyListRecyclerViewAdapter(
-    private val values: List<PlaceholderItem>
-) : RecyclerView.Adapter<MyListRecyclerViewAdapter.ViewHolder>() {
+    private val meetings: List<Meeting>?
+) : RecyclerView.Adapter<MyListRecyclerViewAdapter.MeetingViewHolder>() {
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
-
-        return ViewHolder(
-            FragmentMeetingListBinding.inflate(
-                LayoutInflater.from(parent.context),
-                parent,
-                false
-            )
-        )
-
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MeetingViewHolder {
+        val binding = FragmentMeetingListItemBinding.inflate(LayoutInflater.from(parent.context), parent, false)
+        return MeetingViewHolder(binding)
     }
 
-    override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        val item = values[position]
-        holder.idView.text = item.id
-        holder.contentView.text = item.content
+    override fun onBindViewHolder(holder: MeetingViewHolder, position: Int) {
+        meetings?.get(position)?.let { meeting ->
+            holder.bind(meeting)
+        }
     }
 
-    override fun getItemCount(): Int = values.size
+    override fun getItemCount(): Int = meetings?.size ?: 0
 
-    inner class ViewHolder(binding: FragmentMeetingListBinding) :
+    class MeetingViewHolder(private val binding: FragmentMeetingListItemBinding) :
         RecyclerView.ViewHolder(binding.root) {
-        val idView: TextView = binding.itemNumber
-        val contentView: TextView = binding.content
-
-        override fun toString(): String {
-            return super.toString() + " '" + contentView.text + "'"
+        @SuppressLint("SetTextI18n")
+        fun bind(meeting: Meeting) {
+            with(binding) {
+                meetingOfficialNameTextView.text = meeting.meetingOfficialName
+                meetingNameTextView.text = meeting.meetingName
+                circuitShortNameTextView.text = meeting.circuitShortName
+                locationTextView.text = "${meeting.location}, ${meeting.countryName}"
+                dateStartTextView.text = "Date: ${meeting.dateStart}"
+            }
         }
     }
 
