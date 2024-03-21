@@ -9,7 +9,7 @@ android:padding="16dp">
     android:id="@+id/meetingOfficialNameTextView"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
-    android:textSize="18sp"
+    android:textSize="16sp"
     android:textStyle="bold"
     android:text="Meeting Official Name" />
 
@@ -17,27 +17,20 @@ android:padding="16dp">
     android:id="@+id/meetingNameTextView"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
-    android:textSize="16sp"
-    android:text="Meeting Name" />
-
-<TextView
-    android:id="@+id/circuitShortNameTextView"
-    android:layout_width="wrap_content"
-    android:layout_height="wrap_content"
     android:textSize="14sp"
-    android:text="Circuit Short Name" />
+    android:text="Meeting Name" />
 
 <TextView
     android:id="@+id/locationTextView"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
-    android:textSize="14sp"
+    android:textSize="12sp"
     android:text="Location" />
 
 <TextView
     android:id="@+id/dateStartTextView"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
-    android:textSize="14sp"
+    android:textSize="12sp"
     android:text="Date Start" />
 </LinearLayout>

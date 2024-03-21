@@ -6,6 +6,8 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import com.example.trackrush.data.model.Meeting
 import com.example.trackrush.databinding.FragmentMeetingListItemBinding
+import java.text.SimpleDateFormat
+import java.util.Locale
 
 class MyListRecyclerViewAdapter(
     private val meetings: List<Meeting>?
@@ -31,9 +33,20 @@ class MyListRecyclerViewAdapter(
             with(binding) {
                 meetingOfficialNameTextView.text = meeting.meetingOfficialName
                 meetingNameTextView.text = meeting.meetingName
-                circuitShortNameTextView.text = meeting.circuitShortName
                 locationTextView.text = "${meeting.location}, ${meeting.countryName}"
-                dateStartTextView.text = "Date: ${meeting.dateStart}"
+                dateStartTextView.text = "Date: ${formatDate(meeting.dateStart)}"
+            }
+        }
+
+        private fun formatDate(dateString: String): String {
+            val inputFormat = SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss", Locale.getDefault())
+            val outputFormat = SimpleDateFormat("dd MMM yyyy HH:mm", Locale.getDefault())
+
+            return try {
+                val date = inputFormat.parse(dateString)
+                outputFormat.format(date!!)
+            } catch (e: Exception){
+                "Invalid Date"
             }
         }
     }

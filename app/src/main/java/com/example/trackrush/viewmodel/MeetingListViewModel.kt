@@ -9,6 +9,6 @@ class MeetingListViewModel : ViewModel() {
 
     val meetings = liveData {
         val retrievedMeetings = repository.getAllMeetings()
-            emit(retrievedMeetings)
+        emit(retrievedMeetings)
     }
 }
