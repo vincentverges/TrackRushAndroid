@@ -8,8 +8,21 @@
     <fragment
         android:id="@+id/meetingListFragment"
         android:name="com.example.trackrush.ui.meetings.MeetingListFragment"
-        android:label="meeting_list_fragment"
-        tools:layout="@layout/fragment_meeting_list" />
-    <!-- Ajoutez plus de destinations et d'actions ici -->
+        android:label="2023 Races"
+        tools:layout="@layout/fragment_meeting_list">
+        <action
+            android:id="@+id/action_meetingListFragment_to_meetingDetailsFragment"
+            app:destination="@+id/meetingDetailsFragment" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/meetingDetailsFragment"
+        android:name="com.example.trackrush.ui.meetings.MeetingDetailFragment"
+        android:label="Meeting Details"
+        tools:layout="@layout/fragment_meeting_detail">
+        <argument
+            android:name="meetingDetails"
+            app:argType="com.example.trackrush.data.model.Meeting" />
+    </fragment>
 
 </navigation>

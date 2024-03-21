@@ -9,8 +9,11 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.viewModels
+import androidx.navigation.fragment.findNavController
+import com.example.trackrush.R
 import com.example.trackrush.databinding.FragmentMeetingListBinding
 import com.example.trackrush.viewmodel.MeetingListViewModel
+import java.io.Serializable
 
 /**
  * A fragment representing a list of Items.
@@ -30,12 +33,18 @@ class MeetingListFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
         (activity as AppCompatActivity).supportActionBar?.title = "Formula 1 Championship"
 
         binding.meetingsRecyclerView.layoutManager = LinearLayoutManager(context)
 
         viewModel.meetings.observe(viewLifecycleOwner) { meetingsList ->
-            binding.meetingsRecyclerView.adapter = MyListRecyclerViewAdapter(meetingsList)
+            binding.meetingsRecyclerView.adapter = MyListRecyclerViewAdapter(meetingsList) { meeting ->
+                val bundle = Bundle().apply {
+                    putSerializable("meetingDetails", meeting as Serializable)
+                }
+                findNavController().navigate(R.id.action_meetingListFragment_to_meetingDetailsFragment, bundle)
+            }
         }
     }
 

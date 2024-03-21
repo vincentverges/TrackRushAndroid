@@ -1,6 +1,7 @@
 package com.example.trackrush.data.model
 
 import com.google.gson.annotations.SerializedName
+import java.io.Serializable
 
 data class Meeting(
     @SerializedName("circuit_key") val circuitKey: Int,
@@ -15,4 +16,4 @@ data class Meeting(
     @SerializedName("meeting_name") val meetingName: String,
     @SerializedName("meeting_official_name") val meetingOfficialName: String,
     @SerializedName("year") val year: Int
-)
+) : Serializable

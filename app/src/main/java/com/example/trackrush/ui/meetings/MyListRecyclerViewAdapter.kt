@@ -1,16 +1,20 @@
 package com.example.trackrush.ui.meetings
 
 import android.annotation.SuppressLint
+import android.os.Bundle
 import androidx.recyclerview.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import androidx.navigation.findNavController
+import com.example.trackrush.R
 import com.example.trackrush.data.model.Meeting
 import com.example.trackrush.databinding.FragmentMeetingListItemBinding
 import java.text.SimpleDateFormat
 import java.util.Locale
 
 class MyListRecyclerViewAdapter(
-    private val meetings: List<Meeting>?
+    private val meetings: List<Meeting>?,
+    private val onMeetingClicked: (Meeting) -> Unit
 ) : RecyclerView.Adapter<MyListRecyclerViewAdapter.MeetingViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MeetingViewHolder {
@@ -21,6 +25,12 @@ class MyListRecyclerViewAdapter(
     override fun onBindViewHolder(holder: MeetingViewHolder, position: Int) {
         meetings?.get(position)?.let { meeting ->
             holder.bind(meeting)
+            holder.itemView.setOnClickListener { view ->
+                val bundle = Bundle().apply {
+                    putSerializable("meetingDetails", meeting)
+                }
+                view.findNavController().navigate(R.id.action_meetingListFragment_to_meetingDetailsFragment, bundle)
+            }
         }
     }
 
