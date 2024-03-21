@@ -12,8 +12,16 @@ interface F1ApiService {
     suspend fun getAllMeetings(): Response<List<Meeting>>
 
     @GET("sessions")
-    suspend fun getSessionsForMeeting(@Query("meeting_key") meetingKey: Int): Response<List<Session>>
+    suspend fun getSessions(
+        @Query("circuit_key") circuitKey: Int,
+        @Query("meeting_key") meetingKey: Int,
+        @Query("year") year: Int,
+        @Query("session_name") sessionName: String
+        ): Response<List<Session>>
 
     @GET("drivers")
-    suspend fun getDriversForSession(@Query("session_key") sessionKey: Int): Response<List<Driver>>
+    suspend fun getDrivers(
+        @Query("meeting_key") meetingKey: Int,
+        @Query("session_key") sessionKey: Int
+    ): Response<List<Driver>>
 }

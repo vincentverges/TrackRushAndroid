@@ -6,11 +6,16 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import com.example.trackrush.R
+import com.example.trackrush.data.api.F1ApiService
 import com.example.trackrush.data.model.Meeting
+import com.example.trackrush.data.repository.F1Repository
 import com.example.trackrush.databinding.FragmentMeetingDetailBinding
 import com.example.trackrush.ui.drivers.DriverListFragment
+import com.google.gson.Gson
+import kotlinx.coroutines.launch
 import java.text.SimpleDateFormat
 import java.util.Locale
 
@@ -18,6 +23,7 @@ class MeetingDetailFragment : Fragment() {
 
     private var _binding: FragmentMeetingDetailBinding? = null
     private val binding get() = _binding!!
+    private val f1Repository = F1Repository()
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
     }
@@ -35,7 +41,13 @@ class MeetingDetailFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+
         val meeting = arguments?.getSerializable("meetingDetails") as Meeting
+
+        val circuitKey = meeting.circuitKey
+        val meetingKey = meeting.meetingKey
+
+
         with(binding) {
             meetingNameTextView.text = meeting.meetingName
             meetingOfficialNameTextView.text= meeting.meetingOfficialName
@@ -46,7 +58,20 @@ class MeetingDetailFragment : Fragment() {
             circuitImageView.setImageResource(circuitImageResId)
 
             showDriversButton.setOnClickListener {
-                findNavController().navigate(R.id.action_meetingDetailsFragment_to_driverListFragment)
+
+                viewLifecycleOwner.lifecycleScope.launch {
+                    try {
+                        val drivers = f1Repository.getDriverForMeeting(circuitKey,meetingKey)
+
+                        val driversJson = Gson().toJson(drivers)
+                        val bundle = Bundle().apply {
+                            putString("drivers", driversJson)
+                        }
+                        findNavController().navigate(R.id.action_meetingDetailsFragment_to_driverListFragment,bundle)
+                    } catch (e: Exception) {
+
+                    }
+                }
             }
             }
     }

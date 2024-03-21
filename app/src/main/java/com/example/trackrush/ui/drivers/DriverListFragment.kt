@@ -11,6 +11,8 @@ import android.view.ViewGroup
 import com.example.trackrush.R
 import com.example.trackrush.data.model.Driver
 import com.example.trackrush.databinding.FragmentDriverListBinding
+import com.google.gson.Gson
+import com.google.gson.reflect.TypeToken
 
 class DriverListFragment : Fragment() {
 
@@ -47,57 +49,18 @@ class DriverListFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        val dummyDrivers = listOf(
-            Driver(
-                broadcastName = "Lewis Hamilton",
-                countryCode = "GB",
-                driverNumber = 44,
-                firstName = "Lewis",
-                fullName = "Lewis Carl Davidson Hamilton",
-                headshotUrl = "", // URL factice ou réelle de la photo du pilote
-                lastName = "Hamilton",
-                meetingKey = 1, // Clé factice de la réunion, ajustez selon vos besoins
-                nameAcronym = "HAM",
-                sessionKey = 1, // Clé factice de la session, ajustez selon vos besoins
-                teamColour = "#00D2BE", // Couleur factice de l'équipe Mercedes
-                teamName = "Mercedes"
-            ),
-            Driver(
-                broadcastName = "Max Verstappen",
-                countryCode = "NL",
-                driverNumber = 33,
-                firstName = "Max",
-                fullName = "Max Emilian Verstappen",
-                headshotUrl = "", // URL factice ou réelle de la photo du pilote
-                lastName = "Verstappen",
-                meetingKey = 1, // Clé factice de la réunion, ajustez selon vos besoins
-                nameAcronym = "VER",
-                sessionKey = 1, // Clé factice de la session, ajustez selon vos besoins
-                teamColour = "#0600EF", // Couleur factice de l'équipe Red Bull Racing
-                teamName = "Red Bull Racing"
-            ),
-            Driver(
-                broadcastName = "Charles Leclerc",
-                countryCode = "MC",
-                driverNumber = 16,
-                firstName = "Charles",
-                fullName = "Charles Marc Hervé Percival Leclerc",
-                headshotUrl = "", // URL factice ou réelle de la photo du pilote
-                lastName = "Leclerc",
-                meetingKey = 1, // Clé factice de la réunion, ajustez selon vos besoins
-                nameAcronym = "LEC",
-                sessionKey = 1, // Clé factice de la session, ajustez selon vos besoins
-                teamColour = "#DC0000", // Couleur factice de l'équipe Ferrari
-                teamName = "Ferrari"
-            )
-            // Ajoutez d'autres pilotes si nécessaire
-        )
+        val driverJson = arguments?.getString("drivers")
+        val driversType = object : TypeToken<List<Driver>>() {}.type
+        val drivers: List<Driver> = Gson().fromJson(driverJson, driversType)
 
-        val binding = FragmentDriverListBinding.bind(view)
-        binding.list.layoutManager = LinearLayoutManager(context)
-        binding.list.adapter = MyListRecyclerViewAdapter(dummyDrivers)
+        setupRecyclerView(drivers, view)
     }
 
+    private fun setupRecyclerView(drivers: List<Driver>, view: View) {
+        val binding = FragmentDriverListBinding.bind(view)
+        binding.list.layoutManager = LinearLayoutManager(context)
+        binding.list.adapter = MyListRecyclerViewAdapter(drivers)
+    }
     companion object {
         const val ARG_COLUMN_COUNT = "column-count"
     }
