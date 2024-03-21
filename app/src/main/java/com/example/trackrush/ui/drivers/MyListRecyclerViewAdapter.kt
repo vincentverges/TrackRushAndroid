@@ -9,6 +9,7 @@ import com.example.trackrush.R
 
 import com.example.trackrush.ui.drivers.placeholder.PlaceholderContent.PlaceholderItem
 import com.example.trackrush.databinding.FragmentDriverListBinding
+import com.example.trackrush.databinding.FragmentDriverListListBinding
 
 /**
  * [RecyclerView.Adapter] that can display a [PlaceholderItem].
@@ -21,7 +22,7 @@ class MyListRecyclerViewAdapter(
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
 
         return ViewHolder(
-            FragmentDriverListBinding.inflate(
+            FragmentDriverListListBinding.inflate(
                 LayoutInflater.from(parent.context),
                 parent,
                 false
@@ -38,7 +39,7 @@ class MyListRecyclerViewAdapter(
 
     override fun getItemCount(): Int = values.size
 
-    inner class ViewHolder(binding: FragmentDriverListBinding) :
+    inner class ViewHolder(binding: FragmentDriverListListBinding) :
         RecyclerView.ViewHolder(binding.root) {
         val idView: TextView = binding.itemNumber
         val contentView: TextView = binding.content

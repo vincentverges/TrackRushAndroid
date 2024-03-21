@@ -18,11 +18,20 @@
     <fragment
         android:id="@+id/meetingDetailsFragment"
         android:name="com.example.trackrush.ui.meetings.MeetingDetailFragment"
-        android:label="Meeting Details"
+        android:label="Race Details"
         tools:layout="@layout/fragment_meeting_detail">
         <argument
             android:name="meetingDetails"
             app:argType="com.example.trackrush.data.model.Meeting" />
+        <action
+            android:id="@+id/action_meetingDetailsFragment_to_driverListFragment"
+            app:destination="@+id/driverListFragment" />
     </fragment>
+
+    <fragment
+        android:id="@+id/pilotsListFragment"
+        android:name="com.example.trackrush.ui.drivers.DriverListFragment"
+        android:label="Pilots List"
+        tools:layout="@layout/fragment_driver_list" />
 
 </navigation>

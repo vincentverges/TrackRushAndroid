@@ -1,60 +1,69 @@
 package com.example.trackrush.ui.meetings
 
+import android.annotation.SuppressLint
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.navigation.fragment.findNavController
 import com.example.trackrush.R
+import com.example.trackrush.data.model.Meeting
+import com.example.trackrush.databinding.FragmentMeetingDetailBinding
+import com.example.trackrush.ui.drivers.DriverListFragment
+import java.text.SimpleDateFormat
+import java.util.Locale
 
-// TODO: Rename parameter arguments, choose names that match
-// the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-private const val ARG_PARAM1 = "param1"
-private const val ARG_PARAM2 = "param2"
-
-/**
- * A simple [Fragment] subclass.
- * Use the [MeetingDetailFragment.newInstance] factory method to
- * create an instance of this fragment.
- */
 class MeetingDetailFragment : Fragment() {
-    // TODO: Rename and change types of parameters
-    private var param1: String? = null
-    private var param2: String? = null
 
+    private var _binding: FragmentMeetingDetailBinding? = null
+    private val binding get() = _binding!!
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        arguments?.let {
-            param1 = it.getString(ARG_PARAM1)
-            param2 = it.getString(ARG_PARAM2)
-        }
     }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
+        _binding = FragmentMeetingDetailBinding.inflate(inflater, container, false)
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_meeting_detail, container, false)
+        return binding.root
     }
 
-    companion object {
-        /**
-         * Use this factory method to create a new instance of
-         * this fragment using the provided parameters.
-         *
-         * @param param1 Parameter 1.
-         * @param param2 Parameter 2.
-         * @return A new instance of fragment MeetingDetailFragment.
-         */
-        // TODO: Rename and change types and number of parameters
-        @JvmStatic
-        fun newInstance(param1: String, param2: String) =
-            MeetingDetailFragment().apply {
-                arguments = Bundle().apply {
-                    putString(ARG_PARAM1, param1)
-                    putString(ARG_PARAM2, param2)
-                }
+    @SuppressLint("SetTextI18n", "DiscouragedApi")
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+
+        val meeting = arguments?.getSerializable("meetingDetails") as Meeting
+        with(binding) {
+            meetingNameTextView.text = meeting.meetingName
+            meetingOfficialNameTextView.text= meeting.meetingOfficialName
+            dateStartTextView.text= "\uD83D\uDCC5 ${formatDate(meeting.dateStart)}"
+            circuitShortName.text= "\uD83C\uDFCE Circuit: ${meeting.circuitShortName}"
+
+            val circuitImageResId = resources.getIdentifier("c${meeting.circuitKey}", "drawable", context?.packageName)
+            circuitImageView.setImageResource(circuitImageResId)
+
+            showDriversButton.setOnClickListener {
+                findNavController().navigate(R.id.action_meetingDetailsFragment_to_driverListFragment)
             }
+            }
+    }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        _binding = null
+    }
+    private fun formatDate(dateString: String): String {
+        val inputFormat = SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss", Locale.getDefault())
+        val outputFormat = SimpleDateFormat("dd MMM yyyy HH:mm", Locale.getDefault())
+
+        return try {
+            val date = inputFormat.parse(dateString)
+            outputFormat.format(date!!)
+        } catch (e: Exception){
+            "Invalid Date"
+        }
     }
 }

@@ -34,7 +34,7 @@ class MeetingListFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        (activity as AppCompatActivity).supportActionBar?.title = "Formula 1 Championship"
+        (activity as AppCompatActivity).supportActionBar?.title = "2023 Races"
 
         binding.meetingsRecyclerView.layoutManager = LinearLayoutManager(context)
 
