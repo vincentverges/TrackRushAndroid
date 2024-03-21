@@ -79,5 +79,7 @@ dependencies {
     implementation(libs.androidx.lifecycle.viewmodel.ktx)
     implementation(libs.lifecycle.livedata.ktx)
     implementation(libs.androidx.navigation.compose)
+    implementation(libs.glide)
+    annotationProcessor(libs.compiler)
 
 }

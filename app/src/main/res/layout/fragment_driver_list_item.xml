@@ -3,25 +3,44 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:orientation="horizontal"
-    android:padding="16dp" >
+    android:padding="5dp" >
+
+    <TextView
+        android:id="@+id/driverNumber"
+        android:layout_width="46dp"
+        android:layout_height="wrap_content"
+        android:layout_margin="16dp"
+        android:text="99"
+        android:textAppearance="?attr/textAppearanceListItem"
+        android:textColor="@color/black"
+        android:textSize="36dp"
+        android:textStyle="bold" />
+
+    <ImageView
+        android:id="@+id/driverImageView"
+        android:layout_width="60dp"
+        android:layout_height="60dp"
+        android:src="@drawable/ic_launcher_background" />
 
     <TextView
         android:id="@+id/driverName"
-        android:layout_width="203dp"
+        android:layout_width="111dp"
         android:layout_height="wrap_content"
-        android:layout_margin="@dimen/text_margin"
+        android:layout_margin="16dp"
         android:text="Nom du pilote"
         android:textAppearance="?attr/textAppearanceListItem"
         android:textColor="@color/black"
-        android:textSize="35dp" />
+        android:textSize="16dp"
+        android:textStyle="bold" />
 
     <TextView
         android:id="@+id/teamName"
-        android:layout_width="wrap_content"
+        android:layout_width="104dp"
         android:layout_height="wrap_content"
-        android:layout_margin="@dimen/text_margin"
-        android:textSize="35dp"
+        android:layout_margin="16dp"
         android:text="Equipe"
+        android:textAppearance="?attr/textAppearanceListItem"
         android:textColor="@color/black"
-        android:textAppearance="?attr/textAppearanceListItem" />
+        android:textSize="14dp"
+        android:textStyle="bold" />
 </LinearLayout>
