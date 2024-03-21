@@ -29,9 +29,9 @@
     </fragment>
 
     <fragment
-        android:id="@+id/pilotsListFragment"
+        android:id="@+id/driverListFragment"
         android:name="com.example.trackrush.ui.drivers.DriverListFragment"
-        android:label="Pilots List"
-        tools:layout="@layout/fragment_driver_list" />
+        android:label="Driver List"
+        tools:layout="@layout/fragment_driver_list" />®®
 
 </navigation>

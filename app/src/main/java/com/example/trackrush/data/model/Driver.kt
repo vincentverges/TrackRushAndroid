@@ -14,5 +14,5 @@ data class Driver(
     @SerializedName("name_acronym") val nameAcronym: String,
     @SerializedName("session_key") val sessionKey: Int,
     @SerializedName("team_colour") val teamColour: String,
-    @SerializedName("team_name") val teamName: String
+    @SerializedName("team_name") val teamName: String,
 )

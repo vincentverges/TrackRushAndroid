@@ -2,51 +2,33 @@ package com.example.trackrush.ui.drivers
 
 import androidx.recyclerview.widget.RecyclerView
 import android.view.LayoutInflater
-import android.view.View
 import android.view.ViewGroup
-import android.widget.TextView
 import com.example.trackrush.R
+import com.example.trackrush.data.model.Driver
+import com.example.trackrush.databinding.FragmentDriverListItemBinding
 
-import com.example.trackrush.ui.drivers.placeholder.PlaceholderContent.PlaceholderItem
-import com.example.trackrush.databinding.FragmentDriverListBinding
-import com.example.trackrush.databinding.FragmentDriverListListBinding
 
-/**
- * [RecyclerView.Adapter] that can display a [PlaceholderItem].
- * TODO: Replace the implementation with code for your data type.
- */
 class MyListRecyclerViewAdapter(
-    private val values: List<PlaceholderItem>
-) : RecyclerView.Adapter<MyListRecyclerViewAdapter.ViewHolder>() {
+    private val drivers: List<Driver>
+) : RecyclerView.Adapter<MyListRecyclerViewAdapter.DriverViewHolder>() {
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
-
-        return ViewHolder(
-            FragmentDriverListListBinding.inflate(
-                LayoutInflater.from(parent.context),
-                parent,
-                false
-            )
-        )
-
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): DriverViewHolder {
+        val binding = FragmentDriverListItemBinding.inflate(LayoutInflater.from(parent.context), parent, false)
+        return DriverViewHolder(binding)
     }
 
-    override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        val item = values[position]
-        holder.idView.text = item.id
-        holder.contentView.text = item.content
+    override fun onBindViewHolder(holder: DriverViewHolder, position: Int) {
+        val driver = drivers[position]
+        holder.bind(driver)
     }
 
-    override fun getItemCount(): Int = values.size
+    override fun getItemCount(): Int = drivers.size
 
-    inner class ViewHolder(binding: FragmentDriverListListBinding) :
+    inner class DriverViewHolder(private val binding: FragmentDriverListItemBinding) :
         RecyclerView.ViewHolder(binding.root) {
-        val idView: TextView = binding.itemNumber
-        val contentView: TextView = binding.content
-
-        override fun toString(): String {
-            return super.toString() + " '" + contentView.text + "'"
+        fun bind(driver: Driver) {
+            binding.driverName.text = driver.broadcastName
+            binding.teamName.text = driver.teamName
         }
     }
-
 }
